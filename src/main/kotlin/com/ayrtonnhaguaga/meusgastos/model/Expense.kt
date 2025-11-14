@@ -1,15 +1,11 @@
 package com.ayrtonnhaguaga.meusgastos.model
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.PreUpdate
-import jakarta.persistence.Table
-import org.jetbrains.annotations.NotNull
+import jakarta.persistence.*
+import jakarta.validation.constraints.DecimalMin
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
 import java.math.BigDecimal
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
@@ -19,25 +15,24 @@ data class Expense(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    @NotBlank(message = "Descrição é obrigatória")
+
     @Column(nullable = false, length = 500)
     val description: String,
 
-    @NotNull(message = "Valor é obrigatório")
-    @DecimalMin(value = "0.01", message = "Valor deve ser maior que zero")
+
     @Column(nullable = false, precision = 10, scale = 2)
     val amount: BigDecimal,
 
-    @NotNull(message = "Categoria é obrigatória")
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     val category: ExpenseCategory,
 
-    @NotNull(message = "Data da despesa é obrigatória")
+
     @Column(nullable = false, name = "expense_date")
     val expenseDate: LocalDate,
 
-    @NotNull(message = "Método de pagamento é obrigatório")
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20, name = "payment_method")
     val paymentMethod: PaymentMethod,
@@ -45,8 +40,13 @@ data class Expense(
     @Column(length = 1000)
     val notes: String? = null,
 
-)
-{
+    @Column(nullable = false, updatable = false, name = "created_at")
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+
+    @Column(nullable = false, name = "updated_at")
+    var updatedAt: LocalDateTime = LocalDateTime.now()
+
+) {
     @PreUpdate
     fun onUpdate() {
         updatedAt = LocalDateTime.now()
