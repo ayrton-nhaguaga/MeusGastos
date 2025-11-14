@@ -5,9 +5,9 @@ enum class PaymentMethod {
     DINHEIRO,
     CARTAO_CREDITO,
     CARTAO_DEBITO,
-    PIX,
+    M_PESA,
     TRANSFERENCIA,
-    BOLETO;
+    E_MOLA;
 
     companion object {
         fun fromString(value: String): PaymentMethod {
