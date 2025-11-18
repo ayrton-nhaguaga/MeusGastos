@@ -1,4 +1,4 @@
-package com.ayrtonnhaguaga.meusgastos.dto
+package com.ayrtonnhaguaga.meusgastos.dto.request
 
 import com.ayrtonnhaguaga.meusgastos.model.ExpenseCategory
 import com.ayrtonnhaguaga.meusgastos.model.PaymentMethod
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.PastOrPresent
 import java.math.BigDecimal
 import java.time.LocalDate
 
-data class ExpenseRequest(
+data class ExpenseUpdateRequest(
     @field:NotBlank(message = "Descrição é obrigatória")
     val description: String,
 
